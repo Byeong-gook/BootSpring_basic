@@ -20,23 +20,28 @@ import org.springframework.context.annotation.Configuration;
 
 
 //설정 정보를 담당하는 뜻을가진 어노테이션
-@Configuration
-public class AppConfig {
+@Configuration //얘도 스프링 빈으로 등록해줌..  (Configuraiton  어노테이션을 안붙여주면 스프링 GCLIB 내부기술이 적용이안되서 싱글톤패턴이 보장이안됨)
+public class   AppConfig {
 
     //Bean 어노테이션이 있는 메서드는 다 스프링컨테이너에 등록이된다.
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     } //생성자를 통한 의존성주입 (생성자주입)
 
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
+
+        //return null;
     }
 
     @Bean
